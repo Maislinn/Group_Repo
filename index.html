@@ -6,16 +6,78 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!--Title of Company and acting logo-->
    <title>No You Choose</title>
+   
+   <!-- Adding fonts for css -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
  
    <link rel="stylesheet" href="reset.css">
    <!--Verify css file name-->
    <link rel="stylesheet" href ="style.css">
- 
+
+   
  
  
 </head>
  
 <body>
+   <header style="padding:20px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; background-color:#7e1616; color:#FDFCFA;">
+      <h1>No You Choose</h1>
+   </header>
+
+   <main>
+      <section style="display:flex;">
+         <!-- Search inputs -->
+         <div style = "max-width: 20%; display: block; padding:3%;">
+            <div class="search-element" style="margin:10px 0px;">
+            <!-- create style for h2 and h3  -->
+               <h2>What do you like?</h2>
+               <input type="text" class="form-control" placeholder="Genre" id="movie-search-box" onkeyup="findMovies()" onclick="findMovies()">
+
+            <div class="search-list" id="search-list"></div>
+         </div>
+
+         <div class="search-element" style="margin:10px 0px;">
+            <!-- create style for h2 and h3  -->
+            
+            <input type="text" class="form-control" placeholder="Year" id="movie-search-box" onkeyup="findMovies()" onclick="findMovies()">
+
+            <div class="search-list" id="search-list"></div>
+         </div>
+
+         <div class="search-element" style="margin:10px 0px;">
+            <!-- create style for h2 and h3  -->
+            
+            <input type="text" class="form-control" placeholder="Actors" id="movie-search-box" onkeyup="findMovies()" onclick="findMovies()">
+
+            <div class="search-list" id="search-list"></div>
+         </div>
+         </div>
+
+      <div style="max-width:40%; display:block; padding:3%;">
+         <div class="search-element">
+            <!-- create style for h2 and h3  -->
+            <h2>How about...</h2>
+            <div>
+               <img style="max-width: 60%;" src="https://i5.walmartimages.com/asr/4f09ed83-215a-4151-95e4-80ed10c58f6c_1.452960de0145baab7f626ce54fc4edac.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" alt="Tropic Thunder poster">
+            </div>
+            <p>Tropic Thunder is a ridiculous movie featuring an energy drink called Booty Juice.</p>
+         </div>
+      </div>
+
+      <div style="max-width:40%; display:block; padding:3%;">
+         <div class="search-element">
+            <!-- create style for h2 and h3  -->
+            <h2>Check it out</h2>
+            <div>
+               <iframe src="https://www.youtube.com/embed/ASJvlHExnMA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            
+         </div>
+      </div>
+      </section>
+   </main>
  
    <!--Linking the JS file-->
    <script src = "script.js"></script>
