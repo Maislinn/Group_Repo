@@ -5,24 +5,42 @@ const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
 
-// load movies from API
-async function loadMovies(searchTerm){
-    const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
-    const res = await fetch(`${URL}`);
-    const data = await res.json();
-    // console.log(data.Search);
-    if(data.Response == "True") displayMovieList(data.Search);
-}
 
-function findMovies(){
-    let searchTerm = (movieSearchBox.value).trim();
-    if(searchTerm.length > 0){
-        searchList.classList.remove('hide-search-list');
-        loadMovies(searchTerm);
-    } else {
-        searchList.classList.add('hide-search-list');
-    }
-}
+
+// load movies from API
+
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '9cc2b26037mshb0c12c3da97abfbp161b61jsn4ae866302473',
+		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+	}
+};
+
+fetch('https://imdb8.p.rapidapi.com/auto-complete?q=Comedy', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+
+
+
+//async function loadMovies(searchTerm){
+    //let URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
+    //const res = await fetch(`${URL}`);
+    //const data = await res.json();
+    // console.log(data.Search);
+    //if(data.Response == "True") displayMovieList(data.Search);
+//}
+
+//function findMovies(){
+    //let searchTerm = (movieSearchBox.value).trim();
+    //if(searchTerm.length > 0){
+        //searchList.classList.remove('hide-search-list');
+        //loadMovies(searchTerm);
+    //} else {
+        //searchList.classList.add('hide-search-list');
+    //}
+//}
 
 function displayMovieList(movies){
     searchList.innerHTML = "";
