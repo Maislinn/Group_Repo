@@ -1,112 +1,73 @@
-// Titles: https://omdbapi.com/?s=thor&page=1&apikey=fc1fef96
-// details: http://www.omdbapi.com/?i=tt3896198&apikey=fc1fef96
-
-const movieSearchBox = document.getElementById('movie-search-box');
-const searchList = document.getElementById('search-list');
-const resultGrid = document.getElementById('result-grid');
+const APIURL = "https://api.themoviedb.org/3/discover/movie?api_key=11eb0aa3fb6267daf5435ca2f2f2f059";
+const IMGPATH = "https://image.tmdb.org/t/p/w1280";
+const SEARCHAPI =
+    "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
 
+const main = document.getElementById("content");
+const form = document.getElementById("form");
+const search = document.getElementById("search");
 
-// load movies from API
+getMovies(APIURL);
 
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '9cc2b26037mshb0c12c3da97abfbp161b61jsn4ae866302473',
-		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-	}
-};
+async function getMovies(url) {
+    const resp = await fetch(url);
+    const respData = await resp.json();
 
-fetch('https://imdb8.p.rapidapi.com/auto-complete?q=Comedy', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+    console.log(respData);
 
-
-
-//async function loadMovies(searchTerm){
-    //let URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
-    //const res = await fetch(`${URL}`);
-    //const data = await res.json();
-    // console.log(data.Search);
-    //if(data.Response == "True") displayMovieList(data.Search);
-//}
-
-//function findMovies(){
-    //let searchTerm = (movieSearchBox.value).trim();
-    //if(searchTerm.length > 0){
-        //searchList.classList.remove('hide-search-list');
-        //loadMovies(searchTerm);
-    //} else {
-        //searchList.classList.add('hide-search-list');
-    //}
-//}
-
-function displayMovieList(movies){
-    searchList.innerHTML = "";
-    for(let idx = 0; idx < movies.length; idx++){
-        let movieListItem = document.createElement('div');
-        movieListItem.dataset.id = movies[idx].imdbID; // setting movie id in  data-id
-        movieListItem.classList.add('search-list-item');
-        if(movies[idx].Poster != "N/A")
-            moviePoster = movies[idx].Poster;
-        else 
-            moviePoster = "image_not_found.png";
-
-        movieListItem.innerHTML = `
-        <div class = "search-item-thumbnail">
-            <img src = "${moviePoster}">
-        </div>
-        <div class = "search-item-info">
-            <h3>${movies[idx].Title}</h3>
-            <p>${movies[idx].Year}</p>
-        </div>
-        `;
-        searchList.appendChild(movieListItem);
-    }
-    loadMovieDetails();
+    showMovies(respData.results);
 }
 
-function loadMovieDetails(){
-    const searchListMovies = searchList.querySelectorAll('.search-list-item');
-    searchListMovies.forEach(movie => {
-        movie.addEventListener('click', async () => {
-            // console.log(movie.dataset.id);
-            searchList.classList.add('hide-search-list');
-            movieSearchBox.value = "";
-            const result = await fetch(`http://www.omdbapi.com/?i=${movie.dataset.id}&apikey=fc1fef96`);
-            const movieDetails = await result.json();
-            // console.log(movieDetails);
-            displayMovieDetails(movieDetails);
-        });
+function showMovies(movies) {
+
+    main.innerHTML = "";
+
+    movies.forEach((movie) => {
+        const { poster_path, title, vote_average, overview } = movie;
+
+        const movieEl = document.createElement("div");
+        movieEl.classList.add("movie");
+
+        movieEl.innerHTML = `
+            <img
+                src="${IMGPATH + poster_path}"
+                alt="${title}"
+            />
+            <div class="movie-info">
+                <h3>${title}</h3>
+                <span class="${getClassByRate(
+                    vote_average
+                )}">${vote_average}</span>
+            </div>
+            <div class="overview">
+                <h3>Overview:</h3>
+                ${overview}
+            </div>
+        `;
+
+        main.appendChild(movieEl);
     });
 }
 
-function displayMovieDetails(details){
-    resultGrid.innerHTML = `
-    <div class = "movie-poster">
-        <img src = "${(details.Poster != "N/A") ? details.Poster : "image_not_found.png"}" alt = "movie poster">
-    </div>
-    <div class = "movie-info">
-        <h3 class = "movie-title">${details.Title}</h3>
-        <ul class = "movie-misc-info">
-            <li class = "year">Year: ${details.Year}</li>
-            <li class = "rated">Ratings: ${details.Rated}</li>
-            <li class = "released">Released: ${details.Released}</li>
-        </ul>
-        <p class = "genre"><b>Genre:</b> ${details.Genre}</p>
-        <p class = "writer"><b>Writer:</b> ${details.Writer}</p>
-        <p class = "actors"><b>Actors: </b>${details.Actors}</p>
-        <p class = "plot"><b>Plot:</b> ${details.Plot}</p>
-        <p class = "language"><b>Language:</b> ${details.Language}</p>
-        <p class = "awards"><b><i class = "fas fa-award"></i></b> ${details.Awards}</p>
-    </div>
-    `;
+function getClassByRate(vote) {
+    if (vote >= 8) {
+        return "green";
+    } else if (vote >= 5) {
+        return "orange";
+    } else {
+        return "red";
+    }
 }
 
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-window.addEventListener('click', (event) => {
-    if(event.target.className != "form-control"){
-        searchList.classList.add('hide-search-list');
+    const searchTerm = search.value;
+
+    if (searchTerm) {
+        getMovies(SEARCHAPI + searchTerm);
+
+        search.value = "";
     }
 });
