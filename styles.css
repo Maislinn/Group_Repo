@@ -76,7 +76,7 @@ div {
 .movie {
     background-color: #7E1616;
     border-radius: 9px;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 10px rgba(213, 112, 54, 0.2);
     overflow: hidden;
     position: relative;
     margin: 1rem;
