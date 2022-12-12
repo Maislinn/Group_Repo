@@ -68,6 +68,12 @@ h1 {
     outline: none;
 }
 
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 div {
     display: flex;
     flex-wrap: wrap;
@@ -144,6 +150,13 @@ div {
     transform: translateY(0);
     color: var(--Argent);
     background-color: var(--Dark-Grey);
+}
+
+.youtube-container {
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 25% 10px
 }
 
 footer {
