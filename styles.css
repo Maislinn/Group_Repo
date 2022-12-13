@@ -32,6 +32,15 @@ header {
     bottom: 10;
 }
 
+@media (max-width:400px) {
+    .header {
+        background-color: #7E1616;
+        width: 100%;
+        top: 0;
+        bottom: 10;
+    }  
+}
+
 .fa-film {
     color: var(--Lotion);
     text-shadow: 0 0 20px black;
@@ -46,6 +55,15 @@ h1 {
     text-shadow: 0 0 20px black;
 }
 
+@media (max-width:400px) {
+    h1 {
+        color: white;
+        align-self: center;
+        font-weight: bold;
+        text-shadow: 0 0 20px black;
+    }   
+}
+
 .search {
     margin: 3rem;
     margin-left: 12rem;
@@ -56,6 +74,16 @@ h1 {
     font-family: inherit;
     font-size: 1rem;
     padding: 0.5rem 1rem;
+}
+
+@media (max-width:400px) {
+    .search {
+        background-color: transparent;
+        border: 2px solid #E9E9EC;
+        border-radius: 50px;
+        color: #fff;
+        font-family: inherit;
+    }  
 }
 
 .search::placeholder {
